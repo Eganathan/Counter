@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Counter">
         <activity
+            android:name=".CounterActivity"
+            android:exported="false"
+            android:label="HomeActivity"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
