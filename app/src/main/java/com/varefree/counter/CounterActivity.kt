@@ -13,6 +13,7 @@ class CounterActivity : AppCompatActivity() {
     private lateinit var resetBtn : Button
     private lateinit var reduceBtn : Button
     private val count:CountView = CountView;
+    private var wasZero = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,20 +33,22 @@ class CounterActivity : AppCompatActivity() {
         //adding activity to buttons
         //ADD EVENT
         addBtn.setOnClickListener {
-            count.addCount();
+            count.operation('+')
             setText()
+            wasZero = !wasZero
         }
 
         //REDUCE EVENT
         reduceBtn.setOnClickListener {
 
             //Sending a toast if the value is already 0
-            if( Integer.parseInt(CountView.getCount()) == 0)
+            if( Integer.parseInt(CountView.getCount()) == 0 && ! wasZero)
             {
+                wasZero = !wasZero
                 Toast.makeText(this, "The Value is already 0!",Toast.LENGTH_SHORT).show()
-            }else {
+            }else if(Integer.parseInt(CountView.getCount()) > 0){
                 // else deducting the value
-                count.deduct()
+                count.operation('-')
                 setText()
             }
         }
@@ -55,11 +58,9 @@ class CounterActivity : AppCompatActivity() {
             count.reset()
             setText()
         }
-
     }
 
+    //Simple method to set the value to the layout
     fun setText()
-    {
-        counterView.setText(CountView.getCount())
-    }
+    {counterView.setText(CountView.getCount()) }
 }
